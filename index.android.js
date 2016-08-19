@@ -70,6 +70,7 @@ import configureStore from './modules/store/store'
 const store = configureStore();
 
 import NavigationRootContainer from './modules/navigation/navRootContainer';
+import TabsRootContainer from './modules/navigation/tabsRootContainer';
 import { Provider } from 'react-redux';
 
 class Playground extends Component {

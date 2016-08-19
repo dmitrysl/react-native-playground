@@ -9,169 +9,179 @@ import {
   View,
   TextInput,
   ScrollView,
-  ListView
+  ListView,
+  TouchableHighlight,
+  NavigationExperimental
 } from 'react-native';
 
-import { Bananas } from './bananas';
-import { SearchScreen } from './searchScreen';
+import { HomeView } from './views/home/homeView';
+import { ChatView } from './views/chat/chatView';
+import { AboutView } from './views/about/aboutView';
+import { NewsView } from './views/news/newsView'
+
+
+
+const {
+ CardStack: NavigationCardStack,
+ StateUtils: NavigationStateUtils
+} = NavigationExperimental
+
+function createReducer(initialState) {
+  return (currentState = initialState, action) => {
+    switch (action.type) {
+      case 'push':
+        return NavigationStateUtils.push(currentState, {key: action.key});
+      case 'pop':
+        return currentState.index > 0 ?
+          NavigationStateUtils.pop(currentState) :
+            currentState;
+          default:
+            return currentState;
+      }
+   }
+}
+const NavReducer = createReducer({
+  index: 0,
+  key: 'App',
+  routes: [{key: 'Home'}]
+});
+
+// import { Button, Card } from 'react-native-material-design';
 //let Madoka = madoka.Madoka;
 //import { TextField } from './modules/custom-components/custom-inputs/md-textinput'
 //let TextField = textField.TextField;
 
-class Playground extends Component {
+class NewsDetails extends Component {
   constructor(props) {
     super(props);
-
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    this.state = {
-      movies: [],
-      user: "Unknown user",
-      dataSource: ds.cloneWithRows([
-        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
-      ])
-    };
-
-    this.inputs = {
-      name: ''
-    };
-
+    console.log(props);
   }
-
-  async getMoviesFromApi() {
-    try {
-      let response = await fetch('http://facebook.github.io/react-native/movies.json');
-      let responseJson = await response.json();
-      return responseJson.movies;
-    } catch(error) {
-      console.error(error);
-    }
-  }
-
-  getMoviesFromApiAsync() {
-    return fetch('http://facebook.github.io/react-native/movies.json', {
-        method: 'GET'
-        // headers: {
-          // 'Accept': 'application/json',
-          // 'Content-Type': 'application/json',
-        // },
-        // body: JSON.stringify({
-          // firstParam: 'yourValue',
-          // secondParam: 'yourOtherValue',
-        // })
-      })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        return responseJson.movies;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }
-
   render() {
-    let movies = this.getMoviesFromApiAsync();
-    this.setState({movies: movies})
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          <Bananas style={styles.bananas}></Bananas>
-          <View style={styles.descriptionContainer}>
-              <Text style={styles.welcome}>Hello world!🍕🍕🍕🍕</Text>
-              <TextInput
-                style={styles.textInput}
-                onChangeText={(text) => this.setState({user: text})}
-                placeholder='Who should be greeted?🍕🍕🍕'/>
-              <Greeting name={this.state.user}/>
-          </View>
-          <SearchScreen/>
-          <ColorChanger/>
-          <ColorChanger text="This text should change his color."/>
-          <ListView
-            dataSource={this.state.dataSource}
-            renderRow={(rowData) => <Text>{rowData}</Text>}
-          />
-          <ListView
-            dataSource={this.state.movies}
-            renderRow={(rowData) => <Text>{rowData}</Text>}
-          />
-          <View>
-            <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
-            <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}} />
-            <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
-          </View>
+        <View>
+          <Text>News Details: </Text>
+          <Button onPress={this.props.goBack} title='Go Back' />
         </View>
-      </ScrollView>
     );
   }
 }
 
-class ColorChanger extends Component {
+import configureStore from './modules/store/store'
+const store = configureStore();
+
+import NavigationRootContainer from './modules/navigation/navRootContainer';
+import { Provider } from 'react-redux';
+
+class Playground extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <NavigationRootContainer />
+      </Provider>
+    );
+  }
+}
+
+/*
+class Playground extends Component {
   constructor(props) {
     super(props);
 
-    var self = this;
-
     this.state = {
-      color: "rgb(0,0,0)"
+      navState: NavReducer(undefined, {})
     };
-
-    setInterval(() => {
-      let currentColor = self.state.color.match(/(([0-9]+))/ig).map((item) => parseInt(item));
-
-      if (currentColor[0] == 0) currentColor[0] = 255;
-      if (currentColor[1] == 0) currentColor[1] = 255;
-      if (currentColor[2] == 0) currentColor[2] = 255;
-      if (currentColor[0] == 255) currentColor[0] = 0;
-      if (currentColor[1] == 255) currentColor[1] = 0;
-      if (currentColor[2] == 255) currentColor[2] = 0;
-
-      currentColor[0] = self.updateColor(currentColor[0], 0, 2);
-      currentColor[1] = self.updateColor(currentColor[1], 1, 1);
-      currentColor[2] = self.updateColor(currentColor[2], 0, 3);
-
-      let color = "rgb(" + currentColor.join(", ") + ")";
-      self.setState({color: color});
-    }, 1);
   }
-  
-  updateColor(color, direction, num) {
-    if (color >= 0 && color <= 255) {
-      if (direction == 0) {
-        color += num;
-      } else {
-        color -= num; 
-      }
+
+  _handleAction (action) {
+    const newState = NavReducer(this.state.navState, action);
+    if (newState === this.state.navState) {
+      return false;
     }
-    if (color > 255) {
-      color = 255;
+    this.setState({
+      navState: newState
+    })
+    return true;
+ }
+
+ handleBackAction() {
+   return this._handleAction({ type: 'pop' });
+ }
+
+ _renderRoute (key) {
+    if (key === 'Home') {
+      return <HomeView
+              onPress={this._handleAction.bind(this, { type: 'push', key: 'News' })} /> 
     }
-    if (color < 0) {
-      color = 0;
+    if (key === 'News') {
+      return <NewsView
+              goBack={this.handleBackAction.bind(this)}
+              newsDetailsAction={this._handleAction.bind(this, { type: 'push', key: 'NewsDetails' })}
+              onPress={this._handleAction.bind(this, { type: 'push', key: 'Chat' })} />
+    } 
+    if (key === 'NewsDetails') {
+      return (
+        <NewsDetails
+          goBack={this.handleBackAction.bind(this)}
+        />
+      )
     }
-    return color;
+    if (key === 'Chat') {
+      return <ChatView
+              goBack={this.handleBackAction.bind(this)}
+              onPress={this._handleAction.bind(this, { type: 'push', key: 'About' })} />
+    }
+    if (key === 'About') {
+      return <AboutView
+              goBack={this.handleBackAction.bind(this)} />
+    }
+    
+  }
+
+  _renderScene(props) {
+      const ComponentToRender = this._renderRoute(props.scene.route.key)
+      return (
+        <ScrollView style={styles.scrollView}>
+          {ComponentToRender}
+        </ScrollView>
+      );
   }
 
   render() {
     return (
-      <Text style={{color: this.state.color}}>{this.props.text || "This text is changing his color"}</Text>
-    )
+      <NavigationCardStack
+        navigationState={this.state.navState}
+        onNavigate={this._handleAction.bind(this)}
+        renderScene={this._renderScene.bind(this)} />
+    );
   }
 }
 
-class Greeting extends Component {
-  render() {
-    return (
-      <Text>Hello {this.props.name}!</Text>
-    )
-  }
-}
+const Home = ({ onPress }) => (
+ <View style={styles.container}>
+   <Text style={styles.title} >Hello From Home</Text>
+   <Button onPress={onPress} title='Go To Next Scene' />
+ </View>
+)
 
+const Button = ({title, onPress}) => (
+  <TouchableHighlight 
+    underlayColor='#EFEFEF'
+    onPress={onPress}
+    style={styles.button}>
+      <Text>{title}</Text>
+  </TouchableHighlight>
+)
+*/
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#F5FCFF',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  scrollView: {
+    backgroundColor: '#F5FCFF',
+    flex: 1
   },
   bananas: {
     // marginBottom: 10,
@@ -222,6 +232,20 @@ const styles = StyleSheet.create({
       paddingBottom: 7,
       position: 'relative'
    },
+   title: {
+    fontSize: 40,
+    marginTop: 200,
+    textAlign: 'center'
+  },
+   button: {
+    height: 70,
+    marginTop: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 20,
+    marginRight: 20,
+    backgroundColor: '#EDEDED'
+  },
 });
 
 AppRegistry.registerComponent('Playground', () => Playground);

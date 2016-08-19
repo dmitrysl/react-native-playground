@@ -11,3 +11,15 @@ emulator -avd test-device-48-x86
 react-native init [project-name] 
 cd [project-name]
 react-native run-android
+
+# Add external modules
+
+npm install --save redux react-redux
+rnpm link
+
+# Debugging
+
+## console log
+
+react-native log-ios
+react-native log-android

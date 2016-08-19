@@ -8,6 +8,7 @@ import {
     StyleSheet,
     Text,
     View,
+    Animated,
     ActivityIndicator
 } from 'react-native';
 
@@ -20,7 +21,8 @@ export class Bananas extends Component {
     return {
       error: false,
       loading: true,
-      progress: 0
+      progress: 0,
+      bounceValue: new Animated.Value(0)
     };
   }
   render() {
@@ -48,8 +50,16 @@ export class Bananas extends Component {
             </Image>
             {loader}
             {this.state.error || this.state.loading ? null : <Text style={[bananaStyles.grey, bananaStyles.main]}>Pic. 1 - Banana image</Text>}
+            <View>
+                <Animated.Image source={pic}
+                    style={{transform: [{scale: this.state.bounceValue}]}}
+                />
+            </View>
         </View>
     );
+  }
+  componentDidMount() {
+      this.state.bounceValue.setValue(1.5);
   }
 }
 

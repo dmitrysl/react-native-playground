@@ -1,20 +1,13 @@
 import { PUSH_ROUTE, POP_ROUTE } from './actionTypes'
 import { NavigationExperimental } from 'react-native'
+import { InitialState } from './routes'
+
 
 const {
   StateUtils: NavigationStateUtils
 } = NavigationExperimental;
 
-const initialState = {
-  index: 0,
-  key: 'root',
-  routes: [{
-   key: 'home',
-   title: 'Home'
-  }]
-};
-
-function navigationState(state = initialState, action) {
+function navigationState(state = InitialState, action) {
   switch (action.type) {
     
     case PUSH_ROUTE:

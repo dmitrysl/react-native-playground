@@ -11,7 +11,7 @@ var User        = require('./app/models/user'); // get our mongoose model
 let EncryptDecrypt = require('./app/service/encryptDecrypt');
 
 
-var port = process.env.PORT || 8081; // used to create, sign, and verify tokens
+var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
 mongoose.connect(config.database); // connect to database 
 app.set('superSecret', uuid.v4() || config.secret); // secret variable
 
@@ -50,7 +50,6 @@ apiRoutes.post('/auth', function(req, res) {
     } else if (user) {
 
       // check if password matches
-      let isValid = EncryptDecrypt.validatePass(user.password, pass);
       if (!EncryptDecrypt.validatePass(user.password, pass)) {
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
@@ -64,8 +63,7 @@ apiRoutes.post('/auth', function(req, res) {
         };
 
         let token = jwt.sign(claims, app.get('superSecret'), {
-            expiresIn: 60
-          //expiresInMinutes: 1440 // expires in 24 hours
+            expiresIn: 1440 // expires in 24 hours
         });
 
         // return the information including token as JSON

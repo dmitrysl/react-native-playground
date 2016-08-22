@@ -14,16 +14,16 @@ import {
   NavigationExperimental
 } from 'react-native';
 
-import { HomeView } from './views/home/homeView';
-import { ChatView } from './views/chat/chatView';
-import { AboutView } from './views/about/aboutView';
-import { NewsView } from './views/news/newsView'
+import HomeView from './views/home/homeView';
+import ChatView from './views/chat/chatView';
+import AboutView from './views/about/aboutView';
+import NewsView from './views/news/newsView'
 
 
 
 const {
- CardStack: NavigationCardStack,
- StateUtils: NavigationStateUtils
+    CardStack: NavigationCardStack,
+    StateUtils: NavigationStateUtils
 } = NavigationExperimental
 
 function createReducer(initialState) {

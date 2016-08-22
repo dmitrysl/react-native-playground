@@ -18,4 +18,4 @@ function validatePass(hash, pass) {
 module.exports = {
     'hashPass': hashPass,
     'validatePass': validatePass
-}
+};

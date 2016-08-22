@@ -14,7 +14,7 @@ let moment = require('moment');
 
 let TOTAL_NEWS_ITEMS = 10;
 
-export class NewsView extends Component {
+export default class NewsView extends Component {
     constructor(props) {
         super(props);
 

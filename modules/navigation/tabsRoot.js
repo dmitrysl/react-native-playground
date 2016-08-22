@@ -24,18 +24,18 @@ export default class Tabs extends Component {
     const tabs = this.props.tabs.tabs.map((tab, i) => {
       return (
         <TabBarIOS.Item key={tab.key}
-          icon={tab.icon}
-          selectedIcon={tab.selectedIcon}
-          title={tab.title}
-          onPress={() => this._changeTab(i)}
-          selected={this.props.tabs.index === i}>
-          {this._renderTabContent(tab.key)}
+            icon={tab.icon}
+            selectedIcon={tab.selectedIcon}
+            title={tab.title}
+            onPress={() => this._changeTab(i)}
+            selected={this.props.tabs.index === i}>
+            {this._renderTabContent(tab.key)}
         </TabBarIOS.Item>
       )
     });
     return (
       <TabBarIOS tintColor='black'>
-        {tabs}
+          {tabs}
       </TabBarIOS>
     )
   }

@@ -6,7 +6,7 @@ import {
   TouchableHighlight
 } from 'react-native';
 
-export class ChatView extends Component {
+export default class ChatView extends Component {
     constructor(props) {
         super(props);
     }

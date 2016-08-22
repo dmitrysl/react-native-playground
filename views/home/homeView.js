@@ -14,8 +14,11 @@ import {
 import { Bananas } from './bananas';
 import { SearchScreen } from './searchScreen';
 import Button from '../../modules/custom-components/custom-button/button';
+import * as routes from '../../modules/navigation/routes';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 const myIcon = (<Icon name="rocket" size={30} color="#900" />)
 const goToNextSceneButton = (
   <Icon.Button name="goToNextScene" backgroundColor="#3b5998">
@@ -23,17 +26,7 @@ const goToNextSceneButton = (
   </Icon.Button>
 );
 
-
-const aboutRoute = {
-  type: 'push',
-  route: {
-    key: 'about',
-    title: 'About'
-  }
-}
-
-
-export class HomeView extends Component {
+export default class HomeView extends Component {
     constructor(props) {
         super(props);
 
@@ -51,14 +44,14 @@ export class HomeView extends Component {
         };
     }
     async getMoviesFromApi() {
-    try {
-      let response = await fetch('http://facebook.github.io/react-native/movies.json');
-      let responseJson = await response.json();
-      return responseJson.movies;
-    } catch(error) {
-      console.error(error);
+        try {
+            let response = await fetch('http://facebook.github.io/react-native/movies.json');
+            let responseJson = await response.json();
+            return responseJson.movies;
+        } catch(error) {
+            console.error(error);
+        }
     }
-  }
 
   componentWillMount() {
     // let movies = this.getMoviesFromApiAsync();
@@ -74,14 +67,6 @@ export class HomeView extends Component {
   getMoviesFromApiAsync() {
     return fetch('http://facebook.github.io/react-native/movies.json', {
             method: 'GET'
-            // headers: {
-            // 'Accept': 'application/json',
-            // 'Content-Type': 'application/json',
-            // },
-            // body: JSON.stringify({
-            // firstParam: 'yourValue',
-            // secondParam: 'yourOtherValue',
-            // })
         })
         .then((response) => response.json())
         .then((responseJson) => {
@@ -99,7 +84,8 @@ export class HomeView extends Component {
         return (
         <ScrollView>
             <View style={styles.container}>
-              <Button onPress={()=>this.props._handleNavigate(aboutRoute)} label='Go to about' />
+              <Button onPress={()=>this.props._handleNavigate(routes.About)} label='Go to about' />
+              <Button onPress={()=>this.props._handleNavigate(routes.Welcome)} label='Go to welcome' />
               
               <View style={{marginBottom: 10}}>
                 <Icon.Button name="check" backgroundColor="#3b5998" onPress={this.props.onPress}>

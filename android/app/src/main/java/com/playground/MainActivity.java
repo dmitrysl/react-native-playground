@@ -1,6 +1,8 @@
 package com.playground;
 
 import com.facebook.react.ReactActivity;
+import com.remobile.toast.RCTToastPackage;
+import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 
 public class MainActivity extends ReactActivity {

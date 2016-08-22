@@ -8,7 +8,7 @@ import {
 
 import Button from '../../modules/custom-components/custom-button/button';
 
-export class AboutView extends Component {
+export default class AboutView extends Component {
     constructor(props) {
         super(props);
     }

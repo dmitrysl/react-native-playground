@@ -126,6 +126,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-paypal')
     compile project(':react-native-toast')
     compile project(':react-native-material-kit')
     compile project(':react-native-vector-icons')

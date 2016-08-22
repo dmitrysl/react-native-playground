@@ -1,6 +1,7 @@
 package com.playground;
 
 import com.facebook.react.ReactActivity;
+import br.com.vizir.rn.paypal.PayPalPackage;
 import com.remobile.toast.RCTToastPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;
 import com.oblador.vectoricons.VectorIconsPackage;

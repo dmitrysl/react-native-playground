@@ -1,3 +1,7 @@
+# To be done
+ - look at https://github.com/realtime-framework/RCTRealtimeMessagingAndroid
+
+ 
 # Description
 
 npm install rnpm -g

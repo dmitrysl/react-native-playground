@@ -8,9 +8,10 @@ var uuid = require('node-uuid');
 var jwt         = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var config      = require('./config'); // get our config file
 var User        = require('./app/models/user'); // get our mongoose model
+let EncryptDecrypt = require('./app/service/encryptDecrypt');
 
 
-var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
+var port = process.env.PORT || 8081; // used to create, sign, and verify tokens
 mongoose.connect(config.database); // connect to database 
 app.set('superSecret', uuid.v4() || config.secret); // secret variable
 
@@ -33,11 +34,13 @@ var apiRoutes = express.Router();
 // route to authenticate a user (POST http://localhost:8080/api/auth)
 apiRoutes.post('/auth', function(req, res) {
 
-let email = req.body.email;
-let pass = req.body.password;
+  let email = req.body.login;
+  let pass = req.body.pass;
+  let remoteIp = req.connection.remoteAddress;
+  if (remoteIp === '::1') remoteIp = '127.0.0.1';
   // find the user
   User.findOne({
-    email: req.body.email
+    email: email
   }, function(err, user) {
 
     if (err) throw err;
@@ -47,7 +50,8 @@ let pass = req.body.password;
     } else if (user) {
 
       // check if password matches
-      if (user.password != req.body.password) {
+      let isValid = EncryptDecrypt.validatePass(user.password, pass);
+      if (!EncryptDecrypt.validatePass(user.password, pass)) {
         res.json({ success: false, message: 'Authentication failed. Wrong password.' });
       } else {
 
@@ -55,7 +59,7 @@ let pass = req.body.password;
         // create a token
         let claims = {
             sub: user._id,
-            iss: "issuer",
+            iss: remoteIp,
             permissions: ["createUser", "getUsers", "getUserInfo"]
         };
 
@@ -133,21 +137,17 @@ apiRoutes.get('/users', function(req, res) {
 app.use('/api', apiRoutes);
 
 app.get('/setup', function(req, res) {
-    // create a sample user
-    var nick = new User({ 
-        email: 'nick1@test.com',
-        name: 'Nick Cerminara', 
-        password: 'password',
-        admin: true 
-    });
 
-    // save the sample user
-    nick.save(function(err) {
-        if (err) throw err;
-
-        console.log('User saved successfully');
-        res.json({ success: true });
-    });
+  User.findOne({
+    email: 'admin@test.com'
+  }, function(err, user) {
+    if (err) throw err;
+    if (user) {
+      res.json({ success: false, message: 'Authentication failed. User not found.' });
+      return;
+    }
+    createAdminUser(res);
+  });
 });
 
 // =======================
@@ -155,6 +155,26 @@ app.get('/setup', function(req, res) {
 // =======================
 app.listen(port);
 console.log('Magic happens at http://localhost:' + port);
+
+function createAdminUser(res) {
+  let pass = '111111';
+  let hash = EncryptDecrypt.hashPass(pass);
+  // create a sample user
+  var admin = new User({ 
+      email: 'admin@test.com',
+      firstName: 'Servcie', 
+      lastName: 'Administrator',
+      password: hash,
+      admin: true 
+  });
+
+  // save the sample user
+  admin.save(function(err) {
+      if (err) throw err;
+      console.log('Admin user saved successfully');
+      res.json({ success: true, message: 'Admin user saved successfully' });
+  });
+}
 
 /*
 

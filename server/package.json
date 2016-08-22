@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "crypto": "0.0.3",
     "express": "^4.14.0",
     "jsonwebtoken": "^7.1.9",
     "mongoose": "^4.5.9",

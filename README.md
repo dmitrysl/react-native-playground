@@ -12,10 +12,12 @@ react-native init [project-name]
 cd [project-name]
 react-native run-android
 
+
 # Add external modules
 
 npm install --save redux react-redux
 rnpm link
+
 
 # Debugging
 
@@ -24,7 +26,8 @@ rnpm link
 react-native log-ios
 react-native log-android
 
-## Database
+
+# Database
 
 $ sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 $ echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen' | sudo tee /etc/apt/sources.list.d/mongodb.list
@@ -33,6 +36,7 @@ $ sudo apt-get install mongodb-10gen=2.2.3
 $ sudo service mongodb start
 
 $ mongod --dbpath I:\servers\MongoDB\data\react-example
+$ mongod --dbpath E:\database\mongodb\data\react-native
 $ mongo
  > use react-native
  > db.createUser({user: "admin", pwd: "admin123", roles: ["readWrite", "dbAdmin"]})
@@ -40,8 +44,26 @@ $ mongo
  > db.users.update({}, {$set: {email: ""}}, {multi: true});
  > db.users.update({"_id": ObjectId("57b9cf9df4d35984249794b4")}, {$set: {email: "nick@test.com"}}, {multi: true});
 
-## Testing
+# Testing
 
-# API tests
+## API tests
+
 Using POSTman
 https://www.base64decode.org/
+
+
+# Security
+
+https://nodejs.org/api/crypto.html
+
+
+# Dependencies
+
+$ npm install -g nodemon
+$ npm install reinstall -g
+
+
+# Useful commands
+
+netstat -aon | more
+tasklist /fi "PID eq 31"

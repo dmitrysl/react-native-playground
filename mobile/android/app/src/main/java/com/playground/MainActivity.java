@@ -1,6 +1,7 @@
 package com.playground;
 
 import com.facebook.react.ReactActivity;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import br.com.vizir.rn.paypal.PayPalPackage;
 import com.remobile.toast.RCTToastPackage;
 import com.github.xinthink.rnmk.ReactMaterialKitPackage;

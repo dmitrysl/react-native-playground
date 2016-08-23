@@ -6,6 +6,8 @@
  - look at https://github.com/realtime-framework/RCTRealtimeMessagingAndroid
  - push notifications https://medium.com/@spencer_carli/how-to-setup-push-notifications-in-react-native-ios-android-30ea0131355e#.r8ui1wbin
  - live chat
+ - add support of deployment server side code in docker containers
+ - think about microservices
 
  
 # How to setup and run

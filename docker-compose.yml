@@ -1,0 +1,21 @@
+mongodata:  
+  image: mongo:3.3.11
+  volumes:
+    - /data/db
+  command: --break-mongo
+mongo:  
+  image: mongo:3.3.11
+  volumes_from:
+    - mongodata
+  ports:
+    - "27017:27017"
+  command: --smallfiles --rest --auth
+    
+api:
+  build: server
+  links:
+    - mongo
+  restart: always
+  ports:
+    - "8081:8081"
+  

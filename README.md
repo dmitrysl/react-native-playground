@@ -79,3 +79,27 @@ $ npm install reinstall -g
 
 netstat -aon | more
 tasklist /fi "PID eq 31"
+
+
+# Docker setup
+
+docker-machine restart
+docker-machine env
+docker ps -a
+docker images
+docker exec -i -t [container_name] /bin/bash
+
+## Docker-compose usages
+
+docker-compose up -d
+docker-compose stop
+docker-compose down
+docker-compose up -d --build
+
+##  shell script to remove all docer containers and images
+
+#!/bin/bash
+# Delete all containers
+docker rm $(docker ps -a -q)
+# Delete all images
+docker rmi $(docker images -q)

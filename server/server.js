@@ -11,7 +11,7 @@ var User        = require('./app/models/user'); // get our mongoose model
 let EncryptDecrypt = require('./app/service/encryptDecrypt');
 
 
-var port = process.env.PORT || 8080; // used to create, sign, and verify tokens
+var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
 mongoose.connect(config.database); // connect to database 
 app.set('superSecret', uuid.v4() || config.secret); // secret variable
 

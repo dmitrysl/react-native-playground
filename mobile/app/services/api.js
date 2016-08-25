@@ -1,11 +1,38 @@
-//var bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const algorithm = 'aes-256-ctr';
+const password = 'daf2ssog35_2!8*@3E+feq';
+
 import { AsyncStorage, ToastAndroid, AlertIOS } from 'react-native';
 var Toast = require('react-native-toast');
 
 import * as constant from '../constants';
 
 
+function encrypt(text){
+    if (!text) return text;
+    var cipher = crypto.createCipher(algorithm, password)
+    var crypted = cipher.update(text, 'utf8', 'hex')
+    crypted += cipher.final('hex');
+    return crypted;
+}
+ 
+function decrypt(text) {
+    if (!text) return text;
+    var decipher = crypto.createDecipher(algorithm, password)
+    var dec = decipher.update(text, 'hex', 'utf8')
+    dec += decipher.final('utf8');
+    return dec;
+}
+
 function login(login, pass) {
+    if (login && pass) {
+        AsyncStorage.setItem(constant.login, login);
+        AsyncStorage.setItem(constant.pass, encrypt(pass));
+    } else {
+        login = AsyncStorage.getItem(constant.login);
+        pass = decrypt(AsyncStorage.getItem(constant.pass));
+    }
+    
     return fetch(constant.loginUrl, {
             method: 'POST',
             headers: {
@@ -52,10 +79,21 @@ async function logout() {
     }
 }
 
+function relogin(data, callback) {
+    if (typeof data.success !== 'undefined' && !data.success) {
+        return login()
+            .then((resp) => {
+                if (!resp.success) throw new Error("auth error");
+            })
+            .then(() => callback());
+    }
+    return data;
+}
+
 function getUsers() {
     return AsyncStorage.getItem(constant.token)
         .then(function(token) {
-            console.log(token)
+            console.log(token);
             return fetch(constant.listOfUsers, {
                         method: 'GET',
                         headers: {
@@ -65,6 +103,7 @@ function getUsers() {
                         }
                     })
                     .then((response) => response.json())
+                    .then((data) => relogin(data, getUsers))
                     .catch((error) => {
                         console.error(error);
                     });

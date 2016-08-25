@@ -7,5 +7,7 @@ module.exports = {
     'loginUrl': LOGIN_URL,
     'homeUrl': HOME_URL,
     'listOfUsers': USERS_LIST_URL,
-    'token': 'token'
+    'token': 'token',
+    'login': 'login',
+    'pass': 'pass'
 };

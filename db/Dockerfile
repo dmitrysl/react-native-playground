@@ -1,4 +1,5 @@
 # Runtime image
-FROM arangodb:2.7.0
-COPY root /
+FROM mongo:3.3.11
 COPY * /src/
+CMD mongo admin < /src/initial-db-admin.js
+CMD mongo admin -u system -p admin123 < /src/initial-db-setup.js

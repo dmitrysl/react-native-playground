@@ -1,0 +1,49 @@
+# Java
+.gradle/
+build/
+out/
+*.class
+ 
+# Xcode
+!**/*.xcodeproj
+!**/*.xcsettings
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+ 
+# Node
+node_modules
+npm-debug.log
+ 
+# IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+ 
+# Eclipse
+.classpath
+.project
+.settings/
+ 
+# Sublime
+*.sublime-project
+*.sublime-workspace
+ 
+# OSX
+.DS_Store
+ 
+# Windows
+Thumbs.db

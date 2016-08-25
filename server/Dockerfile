@@ -3,8 +3,6 @@ FROM node:6.4.0
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-ONBUILD COPY package.json /usr/src/app/
-ONBUILD RUN npm install -g nodemon && npm install
-ONBUILD COPY . /usr/src/app
-
-CMD [ "nodemon", "server.js" ]
+COPY . /usr/src/app
+RUN npm install -g nodemon 
+RUN npm install

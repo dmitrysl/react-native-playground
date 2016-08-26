@@ -159,12 +159,18 @@ apiRoutes.get('/users', function(req, res) {
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
+let oneDay = 86400000;
+
 // define static routes
-app.use('/app/', express.static(path.resolve(__dirname, 'client/build')));
-app.use('/libs', express.static(path.resolve(__dirname, 'client/libs')));
-app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_modules')));
-app.use('/css', express.static(path.resolve(__dirname, 'client/css')));
-app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js')));
+app.use('/app', express.static(path.resolve(__dirname, 'client/build'), { maxAge: oneDay }));
+app.use('/libs', express.static(path.resolve(__dirname, 'client/libs'), { maxAge: oneDay }));
+app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_modules'), { maxAge: oneDay }));
+app.use('/css', express.static(path.resolve(__dirname, 'client/css'), { maxAge: oneDay }));
+app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js'), { maxAge: oneDay }));
+
+app.get('/**/*.html',function(req, res){
+  res.sendFile(path.join(__dirname + '/client' + req.originalUrl));
+});
 
 app.get('/*', function (req, res) {
     res.sendFile(path.resolve(__dirname, 'client/index.html'));

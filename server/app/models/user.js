@@ -20,7 +20,7 @@ var Schema = require('jugglingdb').Schema;
 //     //ssl: true,
 //     debug: false
 // });
-var schema = new Schema('postgres', { url: 'postgres://uercuqqgfibmym:XvVS2QPVGTm11QsBz1WRyZ_Otw@ec2-54-228-213-35.eu-west-1.compute.amazonaws.com:5432/dlgnkbqiumvpr' });
+var schema = new Schema('postgres', { url: 'postgres://uercuqqgfibmym:XvVS2QPVGTm11QsBz1WRyZ_Otw@ec2-54-228-213-35.eu-west-1.compute.amazonaws.com:5432/dlgnkbqiumvpr?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory' });
 
 
 schema.automigrate();

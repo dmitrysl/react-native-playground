@@ -89,6 +89,14 @@ netstat -aon | more
 tasklist /fi "PID eq 31"
 
 
+# Heroku
+heroku config --app pst-test
+heroku pg:diagnose --app pst-test
+heroku pg:info --app pst-test
+heroku pg:psql --app pst-test
+heroku logs --app pst-test
+
+
 # Docker setup
 
 docker-machine restart

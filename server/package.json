@@ -17,6 +17,7 @@
     "jugglingdb-postgres": "^0.1.0",
     "mongoose": "^4.5.9",
     "morgan": "^1.7.0",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "pg": "^6.1.0"
   }
 }

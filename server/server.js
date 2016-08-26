@@ -13,7 +13,7 @@ let EncryptDecrypt = require('./app/service/encryptDecrypt');
 
 
 var port = process.env.PORT || 3000; // used to create, sign, and verify tokens
-mongoose.connect(config.database); // connect to database 
+//mongoose.connect(config.database); // connect to database 
 app.set('superSecret', uuid.v4() || config.secret); // secret variable
 
 

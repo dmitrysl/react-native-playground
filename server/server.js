@@ -159,15 +159,12 @@ apiRoutes.get('/users', function(req, res) {
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
-app.use('/app', express.static(path.resolve(__dirname, 'client/build')));
+// define static routes
+app.use('/app/', express.static(path.resolve(__dirname, 'client/build')));
 app.use('/libs', express.static(path.resolve(__dirname, 'client/libs')));
 app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_modules')));
 app.use('/css', express.static(path.resolve(__dirname, 'client/css')));
 app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js')));
-
-// var renderIndex = (req: express.Request, res: express.Response) => {
-//     res.sendFile(path.resolve(__dirname, 'index.html'));
-// }
 
 app.get('/*', function (req, res) {
     res.sendFile(path.resolve(__dirname, 'client/index.html'));

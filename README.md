@@ -90,6 +90,7 @@ tasklist /fi "PID eq 31"
 
 
 # Heroku
+heroku config:set PGSSLMODE=require
 heroku config --app pst-test
 heroku pg:diagnose --app pst-test
 heroku pg:info --app pst-test

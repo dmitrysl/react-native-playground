@@ -159,6 +159,7 @@ apiRoutes.get('/users', function(req, res) {
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
+// cache static files expiration time
 let oneDay = 86400000;
 
 // define static routes

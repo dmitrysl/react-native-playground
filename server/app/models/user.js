@@ -23,8 +23,6 @@ var schema = new Schema('postgres', {
 //var schema = new Schema('postgres', { url: 'postgres://uercuqqgfibmym:XvVS2QPVGTm11QsBz1WRyZ_Otw@ec2-54-228-213-35.eu-west-1.compute.amazonaws.com:5432/dlgnkbqiumvpr?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory' });
 
 
-schema.automigrate();
-
 var User = schema.define('User', {
     firstName:  String,
     lastName:   String,
@@ -35,7 +33,10 @@ var User = schema.define('User', {
     approved:   Boolean,
     joinedAt:   Date
 }, {
+    table: 'users',
     restPath: '/users' // tell WebService adapter which path use as API endpoint
 });
+
+schema.automigrate();
 
 module.exports = User;

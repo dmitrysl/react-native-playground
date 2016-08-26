@@ -25,6 +25,20 @@ app.use(morgan('dev'));
 
 // API ROUTES -------------------
 
+app.get('/setup', function(req, res) {
+
+  User.findOne({
+    email: 'admin@test.com'
+  }, function(err, user) {
+    if (err) throw err;
+    if (user) {
+      res.json({ success: false, message: 'User is already present.' });
+      return;
+    }
+    createAdminUser(res);
+  });
+});
+
 // get an instance of the router for api routes
 var apiRoutes = express.Router(); 
 
@@ -134,19 +148,6 @@ apiRoutes.get('/users', function(req, res) {
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
-app.get('/setup', function(req, res) {
-
-  User.findOne({
-    email: 'admin@test.com'
-  }, function(err, user) {
-    if (err) throw err;
-    if (user) {
-      res.json({ success: false, message: 'Authentication failed. User not found.' });
-      return;
-    }
-    createAdminUser(res);
-  });
-});
 
 // =======================
 // start the server ======

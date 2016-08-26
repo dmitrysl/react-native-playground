@@ -15,6 +15,14 @@ const homeRoute = {
   }
 }
 
+const loginRoute = {
+  type: 'push',
+  route: {
+    key: 'login',
+    title: 'Login'
+  }
+}
+
 const welcomeRoute = {
   type: 'push',
   route: {

@@ -3,10 +3,6 @@ import {
     View,
     Text,
     TextInput,
-    ScrollView,
-    ListView,
-    InteractionManager,
-    RecyclerViewBackedScrollView,
     StyleSheet
 } from 'react-native';
 import {
@@ -38,14 +34,12 @@ const styles = StyleSheet.create({
   },
 });
 
-export default class WelcomeView extends Component {
+export default class LoginView extends Component {
     constructor(props) {
         super(props);
-        this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1['email'] !== r2['email']});
         this.state = {
             email: null,
-            password: null,
-            users: this.ds
+            password: null
         }
         this.ColoredRaisedButton = MKButton.coloredButton()
             .withText('Log In')
@@ -88,47 +82,10 @@ export default class WelcomeView extends Component {
                 .then(function(data) {
                     console.log(data);
                     console.log("WELCOME.login.scope", self)
-                    InteractionManager.runAfterInteractions(() => {
-                        self.setState({
-                            users: self.ds.cloneWithRows(data)
-                        });
-                    });
-                    // self.props._handleNavigate(routes.About);
+                    self.props._handleNavigate(routes.About);
                 });
             }
         });
-    }
-    reloadUsers() {
-        let self = this;
-        dismissKeyboard();
-        api.getUsers()
-            .then(function(data) {
-                console.log(data);
-                console.log("WELCOME.reloadUsers.scope", self)
-                InteractionManager.runAfterInteractions(() => {
-                    let newDs = self.ds.cloneWithRows(data);
-                    self.setState({
-                        users: newDs
-                    });
-                });
-                // self.props._handleNavigate(routes.About);
-            });
-    }
-    componentWillMount() {
-        
-    }
-    componentDidMount() {
-        this.setState({
-            users: this.state.users.cloneWithRows([]),
-        })
-    }
-    _renderRow(rowData) {
-        let userName = rowData.firstName + ' ' + rowData.lastName; 
-        return (
-            <View>
-                <Text>{userName} {rowData.admin ? 'Admin' : 'Regular'}</Text>
-            </View>
-        );
     }
     render() {
         const ColoredRaisedButton = this.ColoredRaisedButton;
@@ -146,18 +103,10 @@ export default class WelcomeView extends Component {
                 <ColoredRaisedButton onPress={this.login.bind(this)}/>
                 <View>
                   <Button onPress={this.login.bind(this)} label='Log In' />
-                  <Button onPress={this.reloadUsers.bind(this)} label='Reload List' />
                   <Button onPress={this.props.goBack} label='Go Back' />
                 </View>
-                <ScrollView>
-                    <ListView
-                        initialListSize={0}
-                        dataSource={this.state.users}
-                        renderRow={this._renderRow}
-                    />
-                </ScrollView>
             </View>
-        ); // renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
+        );
     }
 }
 // <CustomButton /> <ColoredRaisedButton />

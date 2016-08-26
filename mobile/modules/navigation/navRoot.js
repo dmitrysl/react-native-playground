@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import HomeView from '../../views/home/homeView';
 import AboutView from '../../views/about/aboutView';
 import WelcomeView from '../../views/welcome/welcome';
+import LoginView from '../../views/login/loginView';
 
 import {
     BackAndroid,
@@ -35,6 +36,10 @@ export default class NavRoot extends Component {
     }
     if (route.key === 'welcome') {
       return (<WelcomeView _handleNavigate={this._handleNavigate.bind(this)}
+                goBack={this._handleBackAction.bind(this)} />);
+    }
+    if (route.key === 'login') {
+      return (<LoginView _handleNavigate={this._handleNavigate.bind(this)}
                 goBack={this._handleBackAction.bind(this)} />);
     }
   }

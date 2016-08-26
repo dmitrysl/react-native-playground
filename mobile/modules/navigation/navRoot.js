@@ -28,19 +28,18 @@ export default class NavRoot extends Component {
   }
   _renderScene (props) {
     const { route } = props.scene;
+    if (route.key === 'welcome') {
+      return (<WelcomeView _handleNavigate={this._handleNavigate.bind(this)} />);
+    }
+    if (route.key === 'login') {
+      return (<LoginView _handleNavigate={this._handleNavigate.bind(this)}
+                goBack={this._handleBackAction.bind(this)} />);
+    }
     if (route.key === 'home') {
      return (<HomeView _handleNavigate={this._handleNavigate.bind(this)} />);
     }
     if (route.key === 'about') {
      return (<AboutView goBack={this._handleBackAction.bind(this)} />);
-    }
-    if (route.key === 'welcome') {
-      return (<WelcomeView _handleNavigate={this._handleNavigate.bind(this)}
-                goBack={this._handleBackAction.bind(this)} />);
-    }
-    if (route.key === 'login') {
-      return (<LoginView _handleNavigate={this._handleNavigate.bind(this)}
-                goBack={this._handleBackAction.bind(this)} />);
     }
   }
   _handleBackAction () {

@@ -74,9 +74,15 @@ import TabsRootContainer from './modules/navigation/tabsRootContainer';
 import { Provider } from 'react-redux';
 
 class Playground extends Component {
+  constructor() {
+    super();
+    this.state = {
+      store: store,
+    };
+  }
   render() {
     return (
-      <Provider store={store}>
+      <Provider store={this.state.store}>
         <NavigationRootContainer />
       </Provider>
     );

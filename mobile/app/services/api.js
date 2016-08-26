@@ -32,6 +32,10 @@ function login(login, pass) {
     } else {
         login = AsyncStorage.getItem(constant.login);
         pass = AsyncStorage.getItem(constant.pass);
+        if (typeof login !== 'string' || typeof pass !== 'string') {
+            throw new Error("Email or pass is not correct.");
+        }
+        console.log("api.login.credentials", login, " ", pass);
         // pass = decrypt(AsyncStorage.getItem(constant.pass));
     }
     
@@ -41,10 +45,7 @@ function login(login, pass) {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json' // application/x-www-form-urlencoded
             },
-            body: JSON.stringify({
-                login: login,
-                pass: pass,
-            })
+            body: JSON.stringify({login, pass,})
         })
         .then((response) => response.json())
         .then((json) => {
@@ -82,6 +83,7 @@ async function logout() {
 }
 
 function relogin(data, callback) {
+    console.log(data);
     if (typeof data.success !== 'undefined' && !data.success) {
         return login()
             .then((resp) => {

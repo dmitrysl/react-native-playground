@@ -2,8 +2,8 @@ const initialState = {
     index: 0,
     key: 'root',
     routes: [{
-        key: 'home',
-        title: 'Home'
+        key: 'welcome',
+        title: 'Welcome'
     }]
 };
 
@@ -42,6 +42,7 @@ const aboutRoute = {
 module.exports = {
     InitialState: initialState, 
     Home: homeRoute,
+    Login: loginRoute,
     Welcome: welcomeRoute,
     About: aboutRoute
 };

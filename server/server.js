@@ -50,6 +50,10 @@ apiRoutes.post('/auth', function(req, res) {
 
   let email = req.body.login;
   let pass = req.body.pass;
+  if (typeof email === 'object' || typeof pass === 'object') {
+    res.json({ success: false, message: 'Authentication failed. Wrong email or password.' });
+    return;
+  }
   let remoteIp = req.connection.remoteAddress;
   if (remoteIp === '::1') remoteIp = '127.0.0.1';
   // find the user

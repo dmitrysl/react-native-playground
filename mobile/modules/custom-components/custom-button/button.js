@@ -10,7 +10,8 @@ export default class Button extends Component {
         return (
             <TouchableHighlight
                 underlayColor='#35b5ff'
-                onPress={this.props.onPress} style={styles.button}>
+                style={[this.props.style, styles.button]}
+                onPress={this.props.onPress}>
                     <Text style={styles.label}>{this.props.label}</Text>
             </TouchableHighlight>
         );

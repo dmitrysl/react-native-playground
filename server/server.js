@@ -26,17 +26,35 @@ app.use(morgan('dev'));
 
 
 app.get('/setup', function(req, res) {
+  let pass = '111111';
+  let hash = EncryptDecrypt.hashPass(pass);
 
-  User.findOne({
-    email: 'admin@test.com'
-  }, function(err, user) {
-    if (err) throw err;
-    if (user) {
-      res.json({ success: false, message: 'User is already present.' });
-      return;
-    }
-    createAdminUser(res);
+  var admin = new User({ 
+      email: 'admin@test.com',
+      firstName: 'Servcie', 
+      lastName: 'Administrator',
+      password: hash,
+      admin: true,
+      approved: true,
+      joinedAt: new Date(),
   });
+
+  admin.save(function (err) {
+      if (err) throw err;
+      console.log('Admin user saved successfully');
+      res.json({ success: true, message: 'Admin user saved successfully' });
+  });
+
+  // User.findOne({
+  //   email: 'admin@test.com'
+  // }, function(err, user) {
+  //   if (err) throw err;
+  //   if (user) {
+  //     res.json({ success: false, message: 'User is already present.' });
+  //     return;
+  //   }
+  //   createAdminUser(res);
+  // });
 });
 
 

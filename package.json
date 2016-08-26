@@ -1,0 +1,20 @@
+{
+  "name": "react-native-playground",
+  "version": "0.0.4",
+  "description": "Playground for react native, nodejs, angular2.",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && npm start"
+  },
+  "keywords": [
+    "playground",
+    "heroku"
+  ],
+  "author": "dmitrysl",
+  "license": "MIT",
+  "dependencies": {
+  },
+  "engines": {
+    "node": "6.4.0"
+  }
+}

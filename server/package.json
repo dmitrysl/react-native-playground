@@ -4,7 +4,7 @@
   "description": "backend for mobile app",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"no default  tast is specified\" "
+    "start": "node server.js"
   },
   "author": "dmitrysl",
   "license": "MIT",

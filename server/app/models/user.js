@@ -11,16 +11,16 @@
 
 
 var Schema = require('jugglingdb').Schema;
-var schema = new Schema('postgres', {
-    host: 'ec2-54-228-213-35.eu-west-1.compute.amazonaws.com',
-    database: 'dlgnkbqiumvpr',
-    port: 5432,
-    username: 'uercuqqgfibmym',
-    password: 'XvVS2QPVGTm11QsBz1WRyZ_Otw',
-    ssl: true,
-    debug: false
-});
-//var schema = new Schema('postgres', { url: 'postgres://uercuqqgfibmym:XvVS2QPVGTm11QsBz1WRyZ_Otw@ec2-54-228-213-35.eu-west-1.compute.amazonaws.com:5432/dlgnkbqiumvpr?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory' });
+// var schema = new Schema('postgres', {
+//     host: 'ec2-54-228-213-35.eu-west-1.compute.amazonaws.com',
+//     database: 'dlgnkbqiumvpr',
+//     port: 5432,
+//     username: 'uercuqqgfibmym',
+//     password: 'XvVS2QPVGTm11QsBz1WRyZ_Otw',
+//     ssl: true,
+//     debug: false
+// });
+var schema = new Schema('postgres', { url: 'postgres://uercuqqgfibmym:XvVS2QPVGTm11QsBz1WRyZ_Otw@ec2-54-228-213-35.eu-west-1.compute.amazonaws.com:5432/dlgnkbqiumvpr?sslmode=require&ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory' });
 
 
 var User = schema.define('User', {

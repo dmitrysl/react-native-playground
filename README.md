@@ -25,6 +25,14 @@ cd [project-name]
 react-native run-android
 
 
+# Setup server
+$ npm install --global typescript gulp typings
+$ npm install
+$ cd server && npm install
+$ cd server/client && npm install
+$ cd server/client && gulp buildClient
+
+
 # Add external modules
 
 npm install --save redux react-redux

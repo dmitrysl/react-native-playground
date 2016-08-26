@@ -1,4 +1,5 @@
 var express     = require('express');
+var path = require('path');
 var app         = express();
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
@@ -23,7 +24,6 @@ app.use(bodyParser.json());
 // use morgan to log requests to the console
 app.use(morgan('dev'));
 
-// API ROUTES -------------------
 
 app.get('/setup', function(req, res) {
 
@@ -39,15 +39,22 @@ app.get('/setup', function(req, res) {
   });
 });
 
+
+// API ROUTES -------------------
+
 // get an instance of the router for api routes
 var apiRoutes = express.Router(); 
 
-// TODO: route to authenticate a user (POST http://localhost:8080/api/authenticate)
+// TODO: route to authenticate a user (POST http://localhost:8080/api/auth)
 // TODO: route middleware to verify a token
+
+// route to show a random message (GET http://localhost:8080/api/)
+apiRoutes.get('/', function(req, res) {
+    res.json({ message: 'Welcome to the coolest API on earth!' });
+});
 
 // route to authenticate a user (POST http://localhost:8080/api/auth)
 apiRoutes.post('/auth', function(req, res) {
-
   let email = req.body.login;
   let pass = req.body.pass;
   if (typeof email === 'object' || typeof pass === 'object') {
@@ -135,12 +142,12 @@ apiRoutes.use(function(req, res, next) {
   }
 });
 
-
-// route to show a random message (GET http://localhost:8080/api/)
-apiRoutes.get('/', function(req, res) {
-    res.json({ message: 'Welcome to the coolest API on earth!' });
-});
-
+// route to return all users (GET http://localhost:8080/api/users)
+apiRoutes.get('/users', function(req, res) {
+    User.find({}, function(err, users) {
+        res.json(users);
+    });
+}); 
 
 // route to return all users (GET http://localhost:8080/api/users)
 apiRoutes.get('/users', function(req, res) {
@@ -152,6 +159,19 @@ apiRoutes.get('/users', function(req, res) {
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
 
+app.use('/app', express.static(path.resolve(__dirname, 'client/build')));
+app.use('/libs', express.static(path.resolve(__dirname, 'client/libs')));
+app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_modules')));
+app.use('/css', express.static(path.resolve(__dirname, 'client/css')));
+app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js')));
+
+// var renderIndex = (req: express.Request, res: express.Response) => {
+//     res.sendFile(path.resolve(__dirname, 'index.html'));
+// }
+
+app.get('/*', function (req, res) {
+    res.sendFile(path.resolve(__dirname, 'client/index.html'));
+});
 
 // =======================
 // start the server ======

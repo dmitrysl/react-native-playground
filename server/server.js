@@ -72,10 +72,10 @@ apiRoutes.get('/', function(req, res) {
 });
 
 // route to authenticate a user (POST http://localhost:8080/api/auth)
-apiRoutes.post('/auth', function(req, res) {
+apiRoutes.post('/auth/login', function(req, res) {
   let email = req.body.login;
   let pass = req.body.pass;
-  if (typeof email === 'object' || typeof pass === 'object') {
+  if (!email || !pass || typeof email === 'object' || typeof pass === 'object') {
     res.json({ success: false, message: 'Authentication failed. Wrong email or password.' });
     return;
   }
@@ -178,7 +178,8 @@ apiRoutes.get('/users', function(req, res) {
 app.use('/api', apiRoutes);
 
 // cache static files expiration time
-let oneDay = 86400000;
+// let oneDay = 86400000;
+let oneDay = 1000;
 
 // define static routes
 app.use('/app', express.static(path.resolve(__dirname, 'client/build'), { maxAge: oneDay }));

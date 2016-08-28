@@ -1,0 +1,23 @@
+import { QueryList, ElementRef, Renderer, AfterContentInit } from '@angular/core';
+import { MdLine } from '@angular2-material/core/line/line';
+export declare class MdList {
+}
+export declare class MdListAvatar {
+}
+export declare class MdListItem implements AfterContentInit {
+    private _renderer;
+    private _element;
+    _hasFocus: boolean;
+    private _lineSetter;
+    _lines: QueryList<MdLine>;
+    _hasAvatar: MdListAvatar;
+    constructor(_renderer: Renderer, _element: ElementRef);
+    /** TODO: internal */
+    ngAfterContentInit(): void;
+    _handleFocus(): void;
+    _handleBlur(): void;
+}
+/** @deprecated */
+export declare const MD_LIST_DIRECTIVES: (typeof MdList | typeof MdListItem)[];
+export declare class MdListModule {
+}

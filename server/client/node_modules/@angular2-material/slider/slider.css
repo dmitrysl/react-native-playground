@@ -1,0 +1,124 @@
+/**
+ * Uses a container height and an item height to center an item vertically within the container.
+ */
+/**
+ * Positions the thumb based on its width and height.
+ */
+md-slider {
+  height: 20px;
+  min-width: 128px;
+  position: relative;
+  padding: 0;
+  display: inline-block;
+  outline: none;
+  vertical-align: middle; }
+
+md-slider *,
+md-slider *::after {
+  box-sizing: border-box; }
+
+/**
+ * Exists in order to pad the slider and keep everything positioned correctly.
+ * Cannot be merged with the .md-slider-container.
+ */
+.md-slider-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-left: 8px;
+  padding-right: 8px; }
+
+/**
+ * Holds the isActive and isSliding classes as well as helps with positioning the children.
+ * Cannot be merged with .md-slider-wrapper.
+ */
+.md-slider-container {
+  position: relative; }
+
+.md-slider-track-container {
+  width: 100%;
+  position: absolute;
+  top: 9px;
+  height: 2px; }
+
+.md-slider-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.26); }
+
+.md-slider-track-fill {
+  -webkit-transition-duration: 400ms;
+          transition-duration: 400ms;
+  -webkit-transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+          transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  -webkit-transition-property: width, height;
+  transition-property: width, height;
+  background-color: #9c27b0; }
+
+.md-slider-tick-container, .md-slider-last-tick-container {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 100%; }
+
+.md-slider-thumb-container {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+          transform: translate3d(-50%, -50%, 0);
+  -webkit-transition-duration: 400ms;
+          transition-duration: 400ms;
+  -webkit-transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+          transition-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1);
+  -webkit-transition-property: left, bottom;
+  transition-property: left, bottom; }
+
+.md-slider-thumb-position {
+  -webkit-transition: -webkit-transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: -webkit-transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+.md-slider-thumb {
+  z-index: 1;
+  position: absolute;
+  top: 0px;
+  left: -10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  -webkit-transform: scale(0.7);
+          transform: scale(0.7);
+  -webkit-transition: -webkit-transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: -webkit-transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1), -webkit-transform 400ms cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+.md-slider-thumb::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 20px;
+  border-width: 3px;
+  border-style: solid;
+  -webkit-transition: inherit;
+  transition: inherit;
+  background-color: #9c27b0;
+  border-color: #9c27b0; }
+
+.md-slider-sliding .md-slider-thumb-position,
+.md-slider-sliding .md-slider-track-fill {
+  -webkit-transition: none;
+  transition: none;
+  cursor: default; }
+
+.md-slider-active .md-slider-thumb {
+  -webkit-transform: scale(1);
+          transform: scale(1); }
+
+.md-slider-disabled .md-slider-thumb::after {
+  background-color: rgba(0, 0, 0, 0.26);
+  border-color: rgba(0, 0, 0, 0.26); }

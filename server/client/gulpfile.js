@@ -17,3 +17,5 @@ gulp.task('buildClient', function () {
 		.js
 		.pipe(gulp.dest(path.resolve('./build')))
 });
+
+gulp.task('default', ['buildClient']);

@@ -16,6 +16,7 @@ var AuthGuard = (function () {
     AuthGuard.prototype.canActivate = function () {
         if (localStorage.getItem('currentUser')) {
             // logged in so return true
+            // add validation on expired token
             return true;
         }
         // not logged in so redirect to login page

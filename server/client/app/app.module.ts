@@ -8,6 +8,10 @@ import { XHRBackend } from '@angular/http';
 import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
 import { InMemoryDataService }               from './in-memory-data.service';
 
+import { MdCoreModule } from '@angular2-material/core/core';
+import { MdIconModule } from '@angular2-material/icon/icon';
+import { MdButtonModule } from '@angular2-material/button/button';
+
 import { AppComponent }   from './app.component';
 import { routing }        from './app.routing';
 
@@ -28,7 +32,10 @@ import { HeroSearchComponent }  from './hero-search.component';
     BrowserModule,
     FormsModule,
     routing,
-    HttpModule
+    HttpModule,
+    MdCoreModule,
+    MdIconModule,
+    MdButtonModule
   ],
   declarations: [
     AppComponent,

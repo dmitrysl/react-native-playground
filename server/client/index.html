@@ -1,5 +1,5 @@
 <!DOCTYPE html> 
-<html>
+<html manifest="cache.manifest">
   <head>
     <script>document.write('<base href="' + document.location + '" />');</script>
     <title>Angular 2 QuickStart</title>
@@ -13,6 +13,91 @@
     
     <link rel="stylesheet" href="css/styles.css">
 
+    <script type="text/ecmascript" async>
+        function updateChachControlStatus(text) {
+            var cacheControlElement = document.getElementsByTagName('my-app')[0];
+            //var cacheControlElement = document.getElementById("cacheControl");
+            if (!cacheControlElement) return;
+            cacheControlElement.innerHTML = text;
+        }
+
+        //var cachControlElement = document.getElementsByTagName('html')[0];
+        if (navigator.onLine) {
+          updateChachControlStatus("<span style='color: green; font-size: 10px;'>Connection established</span>");
+          console.log('Connection established');
+        }
+        else {
+          updateChachControlStatus("<span style='color: red; font-size: 10px;'>Cann't connect to remote server</span>");
+          console.log("Cann't connect to remote server");
+        }
+
+        var cache = window.applicationCache;
+
+        if (cache) {
+            cache.addEventListener("cached", function () {
+              //appendSuccessCache();
+              updateChachControlStatus("<span style='color: green; font-size: 10px;'>All resources for this web app have now been downloaded. Please wait while application is running.</span>");
+              console.log("All resources for this web app have now been downloaded. You can run this application while not connected to the internet");
+            }, false);
+
+            cache.addEventListener("checking", function () {
+              updateChachControlStatus("<span style='color: blue; font-size: 10px;'>Checking manifest</span>");
+              console.info("Checking manifest");
+            }, false);
+
+            cache.addEventListener("downloading", function () {
+              updateChachControlStatus("<span style='color: blue; font-size: 10px;'>Starting download of cached files</span>");
+              console.info("Starting download of cached files");
+            }, false);
+
+            cache.addEventListener("error", function (e) {
+              updateChachControlStatus("<span style='color: red; font-size: 10px;'>There was an error in the manifest, downloading cached files or you're offlines</span>");
+              //appendErrorCache();
+              cache.swapCache();
+              console.error("There was an error in the manifest, downloading cached files or you're offline: " + e);
+            }, false);
+
+            cache.addEventListener("noupdate", function () {
+              updateChachControlStatus("<span style='color: grey; font-size: 10px;'>There was no update needed</span>");
+              //appendNoUpdateCache();
+              console.log("There was no update needed");
+            }, false);
+
+            cache.addEventListener("obsolete", function () {
+              updateChachControlStatus("<span style='color: #aaaa44; font-size: 10px;'>Cache obsolete</span>");
+              cache.update();
+              console.log("Cache obsolete");
+            }, false);
+
+            cache.addEventListener("progress", function (e) {
+              updateChachControlStatus("<span style='color: blue; font-size: 10px;'>Downloading cached files...</span>");
+              console.log("Downloading cached files");
+              //var message = getResource(true,'downloadingOfflineResources');
+              //console.log('MESSAGE: ' + message);
+              if (e.lengthComputable) {
+                var percent = Math.round(e.loaded / e.total * 100);
+                updateChachControlStatus("<span style='color: blue; font-size: 10px;'>Downloading " + percent + "%</span>");
+                console.warn(percent + '%');
+                //appendProgressCache(message + '' + Math.round(e.loaded / e.total * 100) + '%');
+              } else {
+                updateChachControlStatus("<span style='color: blue; font-size: 10px;'>Downloading offline resources...</span>");
+                console.warn('Downloading files...');
+                //appendProgressCache(message);
+              };
+            }, false);
+
+            cache.addEventListener("updateready", function () {
+              updateChachControlStatus("<span style='color: green; font-size: 10px;'>Updated cache is ready</span>");
+              //cache.swapCache();
+              //appendUpdateCache();
+              console.info("Updated cache is ready");
+              // Even after swapping the cache the currently loaded page won't use it
+              // until it is reloaded, so force a reload so it is current.
+              window.location.reload();
+              console.log("Window reloaded");
+            }, false);
+        }
+    </script>
     <!-- 1. Load libraries -->
      <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
@@ -31,5 +116,6 @@
   <!-- 3. Display the application -->
   <body>
     <my-app>Loading...</my-app>
+    <div id="cacheControl"></div>
   </body>
 </html>

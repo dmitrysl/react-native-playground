@@ -1,0 +1,39 @@
+CACHE MANIFEST
+# Версия 2
+
+images/logo.png
+
+CACHE:
+css/styles.css
+app/app.component.js
+app/app.module.js
+app/app.routing.js
+app/cache.manifest
+app/dashboard.component.js
+app/hero-detail.component.js
+app/hero-search.component.js
+app/hero-search.service.js
+app/hero.js
+app/hero.service.js
+app/heroes.component.js
+app/home/home.component.js
+app/home/index.js
+app/in-memory-data.service.js
+app/login/index.js
+app/login/login.component.js
+app/main.js
+app/mock-heroes.js
+app/rxjs-extensions.js
+app/services/authentication.service.js
+app/services/index.js
+app/services/user.service.js
+app/_guards/auth.guard.js
+app/_guards/index.js
+app/_models/index.js
+app/_models/user.js
+
+NETWORK:
+index.html
+
+FALLBACK:
+/ /offline.html

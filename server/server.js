@@ -188,6 +188,16 @@ app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_mod
 app.use('/css', express.static(path.resolve(__dirname, 'client/css'), { maxAge: oneDay }));
 app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js'), { maxAge: oneDay }));
 
+app.get('/cache.manifest', function(req, res) {
+  let date = new Date();
+  date.setMinutes(date.getMinutes() + 1);
+  res.header('Expires' , new Date().toISOString());
+  res.header('Cache-Control' , 'no-store, no-cache, must-revalidate');
+  res.header('Pragma' , 'no-cache');
+  res.header('Content-Type', 'text/cache-manifest');
+  res.sendFile(path.join(__dirname + '/client/cache.manifest'));
+});
+
 app.get('/**/*.html',function(req, res){
   res.sendFile(path.join(__dirname + '/client' + req.originalUrl));
 });

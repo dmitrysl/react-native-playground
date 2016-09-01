@@ -1,3 +1,5 @@
+Travis CI [![Build Status](https://travis-ci.org/dmitrysl/react-native-playground.svg?branch=master)](https://travis-ci.org/dmitrysl/react-native-playground)
+
 # Description
  - to be done :)
 

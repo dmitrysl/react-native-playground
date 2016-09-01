@@ -4,7 +4,9 @@
   "description": "Playground for react native, nodejs, angular2.",
   "main": "index.js",
   "scripts": {
-    "start": "cd server && npm start"
+    "start": "cd server && npm start",
+    "build-client": "cd server && npm build-client && cd ..",
+    "build-mobile": "cd mobile && npm start && cd .."
   },
   "keywords": [
     "playground",

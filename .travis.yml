@@ -2,6 +2,7 @@ language: android
 
 env:
   global:
+    - CXX=g++-4.9
     - TRAVIS_NODE_VERSION="6.5.0"
     - NODE_ENV=production
 
@@ -46,7 +47,8 @@ install:
 
 # Emulator Management: Create, Start and Wait
 before_script:
-  - npm install -g react-native-cli gulp
+  #- npm install -g react-native-cli gulp
+  - android list targets
   - echo no | android create avd --force -n test-device-48-x86 -t 48 --abi google_apis/x86_64
   - emulator -avd test-device-48-x86 -no-audio -no-window &
   - android-wait-for-emulator

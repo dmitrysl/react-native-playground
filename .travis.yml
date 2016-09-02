@@ -35,8 +35,9 @@ cache:
     - node_modules
 
 install:
-  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-  - sudo apt-get install -y nodejs
+  #- curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  #- sudo apt-get install -y nodejs
+  - nvm install 6.5.0
   - node -v
   #- sudo add-apt-repository -y ppa:chris-lea/node.js
   #- sudo apt-get -y update

@@ -1,4 +1,9 @@
 language: node_js
+git:
+  depth: 3
+branches:
+  only:
+  - master
 node_js:
   - 6.1.0
 env:
@@ -6,13 +11,12 @@ env:
     - NODE_ENV=production
 before_install:
   # - npm run init
+  - sudo apt-get update -qq
+install: true
 before_script:
-  # - bower install
-  # - gulp
-  # - npm install
+  - npm install -g react-native gulp
+  - npm install
 script:
-  - npm install -g react-native
-  - npm install -g gulp
-  - ./server/client/build-client.sh
-  - cd mobile/ && ./build-mobile.sh
+  - cd mobile/ && ./build-mobile.sh && cd ..
+  - cd server/client && build-client.sh
 sudo: false    

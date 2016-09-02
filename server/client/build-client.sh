@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+set -ev
 cd ${0%/*}
 echo ${0%/*}
 echo $(basename pwd)

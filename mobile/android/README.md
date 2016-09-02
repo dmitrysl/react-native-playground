@@ -3,7 +3,10 @@
 ## Build Android project
     $ cd android && ./gradlew clean
     $ react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
-    $ cd android && ./gradlew assembleRelease --stacktrace
+    $ cd android && ./gradlew clean assembleRelease --stacktrace -x lint
+
+## Test
+    $ ./gradlew clean build connectedCheck --stacktrace -x lint   
 
 ## Manual sign
 1. Generate a private key

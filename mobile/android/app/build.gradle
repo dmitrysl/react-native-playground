@@ -150,6 +150,25 @@ android {
     }
 }
 
+configure(android.lintOptions) {
+    checkReleaseBuilds false
+    abortOnError false
+    // tasks.lint.enabled = false
+}
+
+subprojects {
+    afterEvaluate {
+        if (getPlugins().hasPlugin('android') ||
+            getPlugins().hasPlugin('android-library')) {
+            println name // for debugging
+            configure(android.lintOptions) {
+                checkReleaseBuilds false
+                abortOnError false
+            }
+        }
+    }
+}
+
 dependencies {
     compile project(':react-native-push-notification')
     compile project(':react-native-paypal')
@@ -157,7 +176,7 @@ dependencies {
     compile project(':react-native-material-kit')
     compile project(':react-native-vector-icons')
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.android.support:appcompat-v7:24.2.0"
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
 
@@ -166,4 +185,17 @@ dependencies {
 task copyDownloadableDepsToLibs(type: Copy) {
   from configurations.compile
   into 'libs'
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name.equals("lint")) {
+        task.enabled = false
+    }
+}
+
+afterEvaluate {
+  Set<Task> result = tasks.findAll { task -> task.name.startsWith('lintVital') }
+  result.each { Task task ->
+    task.enabled = false
+  }
 }

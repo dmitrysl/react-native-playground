@@ -10,3 +10,4 @@ echo $(basename pwd)
 #}
 #
 gulp
+cd ../..

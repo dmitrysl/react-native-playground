@@ -14,10 +14,9 @@ before_install:
   # - sudo apt-get update -qq
 install: true
 before_script:
-  - npm install -g react-native gulp
+  - npm install -g react-native-cli gulp
   # - npm install
 script:
-  - pwd
   - ./mobile/build-mobile.sh
   - ./server/client/build-client.sh
 sudo: false    

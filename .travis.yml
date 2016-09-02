@@ -17,6 +17,7 @@ before_script:
   - npm install -g react-native gulp
   - npm install
 script:
-  - cd mobile/ && ./build-mobile.sh && cd ..
-  - cd server/client && build-client.sh
+  - pwd
+  - ./mobile/build-mobile.sh
+  - ./server/client/build-client.sh
 sudo: false    

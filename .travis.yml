@@ -5,12 +5,18 @@ env:
     - CXX=g++-4.9
     - TRAVIS_NODE_VERSION="6.5.0"
     - NODE_ENV=production
+    # switch glibc to a memory conserving mode
+    - MALLOC_ARENA_MAX=2
+    # wait up to 10 minutes for adb to connect to emulator
+    - ADB_INSTALL_TIMEOUT=10
 
 node_js:
   - 6.5.0
 
 android:
   components:
+    - platform-tools
+    - tools
     - build-tools-23.0.1
     - android-23
     - add-on

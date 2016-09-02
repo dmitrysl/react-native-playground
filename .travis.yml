@@ -11,7 +11,7 @@ env:
     - NODE_ENV=production
 before_install:
   # - npm run init
-  - sudo apt-get update -qq
+  # - sudo apt-get update -qq
 install: true
 before_script:
   - npm install -g react-native gulp

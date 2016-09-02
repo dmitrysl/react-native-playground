@@ -35,9 +35,12 @@ cache:
     - node_modules
 
 install:
-  - sudo add-apt-repository -y ppa:chris-lea/node.js
-  - sudo apt-get -y update
-  - sudo apt-get -y install nodejs
+  - curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  - sudo apt-get install -y nodejs
+  - node -v
+  #- sudo add-apt-repository -y ppa:chris-lea/node.js
+  #- sudo apt-get -y update
+  #- sudo apt-get -y install nodejs
   - sudo npm install -g gulp
 
 # Emulator Management: Create, Start and Wait

@@ -4,8 +4,7 @@
   "description": "backend for mobile app",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "build-client": "cd client && gulp && cd .."
+    "start": "node server.js"
   },
   "author": "dmitrysl",
   "license": "MIT",

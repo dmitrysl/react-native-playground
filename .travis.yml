@@ -13,6 +13,6 @@ before_script:
 script:
   - npm install -g react-native
   - npm install -g gulp
-  - npm build-client
-  - npm build-mobile
+  - ./server/client/build-client.sh
+  - cd mobile/ && ./build-mobile.sh
 sudo: false    

@@ -11,7 +11,7 @@ env:
     - ADB_INSTALL_TIMEOUT=10
 
 node_js:
-  - 6.5.0
+  - 6.4.0
 
 android:
   components:

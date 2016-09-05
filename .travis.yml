@@ -83,7 +83,7 @@ before_script:
 script:
   #- cd mobile/android
   #- ./gradlew build connectedCheck --stacktrace
-  # - ./server/client/build-client.sh # disabled release build
+  - ./server/client/build-client.sh
   - ./mobile/build-mobile.sh
   - ./mobile/android/android-test.sh
 

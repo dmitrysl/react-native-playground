@@ -11,7 +11,7 @@ env:
     - ADB_INSTALL_TIMEOUT=10
 
 node_js:
-  - 6.4.0
+  - 6.5.0
 
 android:
   components:
@@ -83,7 +83,7 @@ before_script:
 script:
   #- cd mobile/android
   #- ./gradlew build connectedCheck --stacktrace
-  - ./server/client/build-client.sh
+  # - ./server/client/build-client.sh # disabled release build
   - ./mobile/build-mobile.sh
   - ./mobile/android/android-test.sh
 

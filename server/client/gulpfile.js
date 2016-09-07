@@ -2,6 +2,13 @@ var path = require('path');
 var gulp = require('gulp');
 var ts = require('gulp-typescript');
 var sass = require('gulp-sass');
+var clean = require('gulp-clean');
+
+
+gulp.task('clean', function () {
+    return gulp.src('app', {read: false})
+        .pipe(clean());
+});
 
 gulp.task('buildServer', function () {
 	var tsProject = ts.createProject(path.resolve('./server/tsconfig.json'));
@@ -36,4 +43,4 @@ gulp.task('buildClient', ['buildCss'], function () {
 		.pipe(gulp.dest(path.resolve('./app')))
 });
 
-gulp.task('default', ['buildClient']);
+gulp.task('default', ['clean', 'buildClient']);

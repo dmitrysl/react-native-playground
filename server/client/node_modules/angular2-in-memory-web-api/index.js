@@ -19,17 +19,32 @@ var in_memory_backend_service_2 = require('./in-memory-backend.service');
 var InMemoryWebApiModule = (function () {
     function InMemoryWebApiModule() {
     }
-    InMemoryWebApiModule.forRoot = function (seedData) {
+    /**
+    *  Prepare in-memory-web-api in the root/boot application module
+    *  with class that implements InMemoryDbService and creates an in-memory database.
+    *
+    * @param {Type} dbCreator - Class that creates seed data for in-memory database. Must implement InMemoryDbService.
+    * @param {InMemoryBackendConfigArgs} [options]
+    *
+    * @example
+    * InMemoryWebApiModule.forRoot(dbCreator);
+    * InMemoryWebApiModule.forRoot(dbCreator, {useValue: {delay:600}});
+    */
+    InMemoryWebApiModule.forRoot = function (dbCreator, options) {
+        var providers = [
+            { provide: http_1.XHRBackend, useClass: in_memory_backend_service_2.InMemoryBackendService },
+            { provide: in_memory_backend_service_2.SEED_DATA, useClass: dbCreator }
+        ];
+        if (options) {
+            providers.push({ provide: in_memory_backend_service_2.InMemoryBackendConfig, useValue: options });
+        }
         return {
             ngModule: InMemoryWebApiModule,
-            providers: [
-                { provide: http_1.XHRBackend, useClass: in_memory_backend_service_2.InMemoryBackendService },
-                { provide: in_memory_backend_service_2.SEED_DATA, useClass: seedData }
-            ]
+            providers: providers
         };
     };
     InMemoryWebApiModule = __decorate([
-        core_1.NgModule({ exports: [http_1.HttpModule] }), 
+        core_1.NgModule({}), 
         __metadata('design:paramtypes', [])
     ], InMemoryWebApiModule);
     return InMemoryWebApiModule;

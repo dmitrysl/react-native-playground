@@ -182,10 +182,10 @@ app.use('/api', apiRoutes);
 let oneDay = 1000;
 
 // define static routes
-app.use('/app', express.static(path.resolve(__dirname, 'client/build'), { maxAge: oneDay }));
+app.use('/app', express.static(path.resolve(__dirname, 'client/app'), { maxAge: oneDay }));
 app.use('/libs', express.static(path.resolve(__dirname, 'client/libs'), { maxAge: oneDay }));
 app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_modules'), { maxAge: oneDay }));
-app.use('/css', express.static(path.resolve(__dirname, 'client/css'), { maxAge: oneDay }));
+app.use('/css', express.static(path.resolve(__dirname, 'client/app/css'), { maxAge: oneDay }));
 app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js'), { maxAge: oneDay }));
 
 app.get('/cache.manifest', function(req, res) {
@@ -199,11 +199,11 @@ app.get('/cache.manifest', function(req, res) {
 });
 
 app.get('/**/*.html',function(req, res){
-  res.sendFile(path.join(__dirname + '/client' + req.originalUrl));
+  res.sendFile(path.join(__dirname + '/client/app' + req.originalUrl));
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, 'client/index.html'));
+    res.sendFile(path.resolve(__dirname, 'client/app/index.html'));
 });
 
 // =======================

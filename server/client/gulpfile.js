@@ -16,13 +16,17 @@ gulp.task('copyCss', function() {
 		.pipe(gulp.dest(path.resolve('./app/css')));
 });
 
-gulp.task('sass', function () {
+gulp.task('buildSass', function () {
   return gulp.src('./src/sass/**/*.sass')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./app/css'));
 });
 
-gulp.task('buildCss', ['sass', 'copyCss']);
+gulp.task('sass:watch', function () {
+  gulp.watch('./app/sass/**/*.scss', ['buildSass']);
+});
+
+gulp.task('buildCss', ['buildSass', 'copyCss']);
 
 gulp.task('buildClient', ['buildCss'], function () {
 	var tsProject = ts.createProject(path.resolve('./tsconfig.json'));

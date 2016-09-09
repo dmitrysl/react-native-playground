@@ -1,4 +1,2 @@
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require('./login.component'));
+"use strict";function __export(r){for(var o in r)exports.hasOwnProperty(o)||(exports[o]=r[o])}__export(require("./login.component"));
+//# sourceMappingURL=index.js.map

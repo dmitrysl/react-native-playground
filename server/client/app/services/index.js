@@ -1,5 +1,2 @@
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require('./authentication.service'));
-__export(require('./user.service'));
+"use strict";function __export(e){for(var r in e)exports.hasOwnProperty(r)||(exports[r]=e[r])}__export(require("./authentication.service")),__export(require("./user.service")),__export(require("./privatBankApiService"));
+//# sourceMappingURL=index.js.map

@@ -1,4 +1,2 @@
-function __export(m) {
-    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
-}
-__export(require('./auth.guard'));
+"use strict";function __export(r){for(var t in r)exports.hasOwnProperty(t)||(exports[t]=r[t])}__export(require("./auth.guard"));
+//# sourceMappingURL=index.js.map

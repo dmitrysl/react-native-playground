@@ -1,12 +1,34 @@
 var path = require('path');
 var gulp = require('gulp');
+var watch = require('gulp-watch');
 var ts = require('gulp-typescript');
 var sass = require('gulp-sass');
 var clean = require('gulp-clean');
+var runSequence = require('run-sequence');
+var sourcemaps = require('gulp-sourcemaps');
+var uglify = require('gulp-uglify');
+var cssmin = require('gulp-minify-css')
 
+
+var config = {
+	clean: './app/*',
+	build: {
+		html: './app/',
+		css: './app/css/',
+		img: './app/img/',
+		fonts: './app/fonts/'
+	},
+	src: {
+		html: './src/**/*.html',
+		css: './src/css/**/*.css',
+		sass: './src/sass/**/*.sass',
+		img: './src/img/**/*.*',
+		fonts: 'src/fonts/**/*.*'
+	}
+};
 
 gulp.task('clean', function () {
-    return gulp.src('app', {read: false})
+    return gulp.src(config.clean, {read: false})
         .pipe(clean());
 });
 
@@ -19,14 +41,26 @@ gulp.task('buildServer', function () {
 });
 
 gulp.task('copyCss', function() {
-	return gulp.src(path.resolve('./src/css/**/*.css'))
-		.pipe(gulp.dest(path.resolve('./app/css')));
+	return gulp.src(path.resolve(config.src.css))
+		.pipe(gulp.dest(path.resolve(config.build.css)));
 });
 
 gulp.task('buildSass', function () {
   return gulp.src('./src/sass/**/*.sass')
+  	.pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
-    .pipe(gulp.dest('./app/css'));
+	.pipe(cssmin())
+	.pipe(sourcemaps.write())
+    .pipe(gulp.dest(config.build.css));
+});
+
+gulp.task('copyIndex', function() {
+	return gulp.src(path.resolve('./src/*.html'))
+		.pipe(gulp.dest(path.resolve('./app/')));
+});
+gulp.task('copyHtml', ['copyIndex'], function() {
+	return gulp.src(path.resolve('./src/app/**/*.html'))
+		.pipe(gulp.dest(path.resolve('./app/')));
 });
 
 gulp.task('sass:watch', function () {
@@ -35,12 +69,23 @@ gulp.task('sass:watch', function () {
 
 gulp.task('buildCss', ['buildSass', 'copyCss']);
 
-gulp.task('buildClient', ['buildCss'], function () {
-	var tsProject = ts.createProject(path.resolve('./tsconfig.json'));
+gulp.task('compile', function() {
+	let tsProject = ts.createProject(path.resolve('./tsconfig.json'), {
+    	typescript: require('typescript')
+	});
 	return gulp.src(path.resolve('./src/app/**/*.ts'))
+		.pipe(sourcemaps.init())
 		.pipe(ts(tsProject))
 		.js
-		.pipe(gulp.dest(path.resolve('./app')))
+		.pipe(uglify())
+		.pipe(sourcemaps.write('.'))
+		.pipe(gulp.dest(path.resolve('./app')));
 });
 
-gulp.task('default', ['clean', 'buildClient']);
+gulp.task('build', ['buildCss', 'copyHtml', 'compile']);
+
+gulp.task('default', function(cb) {
+	runSequence('clean', 
+				'build', 
+				cb);
+});

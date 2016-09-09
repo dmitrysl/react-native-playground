@@ -1,6 +1,2 @@
-var Hero = (function () {
-    function Hero() {
-    }
-    return Hero;
-})();
-exports.Hero = Hero;
+"use strict";var Hero=function(){function r(){}return r}();exports.Hero=Hero;
+//# sourceMappingURL=hero.js.map

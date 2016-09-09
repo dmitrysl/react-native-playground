@@ -1,0 +1,1 @@
+{"version":3,"sources":["_models/user.ts"],"names":["User","exports"],"mappings":"YAAA,IAAAA,MAAA,WAAA,QAAAA,MAKA,MAAAA,KALaC,SAAAD,KAAIA","file":"_models/user.js","sourcesContent":["export class User {\n    username: string;\n    password: string;\n    firstName: string;\n    lastName: string;\n}"],"sourceRoot":"/source/"}

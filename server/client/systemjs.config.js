@@ -9,14 +9,19 @@
     '@angular':                   'node_modules/@angular',
     '@angular2-material':         'node_modules/@angular2-material',
     'angular2-in-memory-web-api': 'node_modules/angular2-in-memory-web-api',
-    'rxjs':                       'node_modules/rxjs'
+    'rxjs':                       'node_modules/rxjs',
+    'moment':                     'node_modules/moment/min',
+    // 'reflect-metadata':           'node_modules/reflect-metadata',
+    // 'traceur': 'node_modules/traceur/bin',
   };
   // packages tells the System loader how to load when no filename and/or no extension
   var packages = {
     'app':                        { main: 'main.js',  defaultExtension: 'js' },
     'rxjs':                       { defaultExtension: 'js' },
-    '@angular2-material':         { defaultExtension: 'js' },
     'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+    'moment':                     { main: 'moment.min.js', defaultExtension: 'js'},
+    // 'reflect-metadata':           { main: 'Reflect.js', defaultExtension: 'js'},
+    // 'traceur': { main: 'traceur.js' ,defaultExtension: 'js' },
   };
   var ngPackageNames = [
     'common',
@@ -31,18 +36,25 @@
     'upgrade',
   ];
   var materialPackages=[
-    '@angular2-material/core',
     '@angular2-material/button',
+    '@angular2-material/button-toggle',
     '@angular2-material/card',
     '@angular2-material/checkbox',
+    '@angular2-material/core',
+    '@angular2-material/grid-list',
     '@angular2-material/icon',
     '@angular2-material/input',
     '@angular2-material/list',
+    '@angular2-material/menu',
     '@angular2-material/progress-bar',
     '@angular2-material/progress-circle',
     '@angular2-material/radio',
     '@angular2-material/sidenav',
-    '@angular2-material/toolbar'
+    '@angular2-material/slide-toggle',
+    '@angular2-material/slider',
+    '@angular2-material/tabs',
+    '@angular2-material/toolbar',
+    '@angular2-material/tooltip',
   ];
   // Individual files (~300 requests):
   function packIndex(pkgName) {
@@ -58,11 +70,27 @@
   ngPackageNames.forEach(setPackageConfig);
   materialPackages.forEach(function(pkgName) {
     var pkg=pkgName.split('/');
-    packages[pkgName] = { main: pkg[1]+'.js', defaultExtension: 'js' };
+    packages[pkgName] = { main: pkg[1] + '.umd' + '.js', format: 'cjs', defaultExtension: 'js' };
   });
   var config = {
+    // transpiler: 'ts',
+    // typescriptOptions: {
+    //   tsconfig: true
+    // },
+    // meta: {
+    //   'typescript': {
+    //     "exports": "ts"
+    //   }
+    // },
+    // meta: {
+      // 'typescript': {
+      //   "exports": "ts"
+      // },
+      // 'app/main': { format: 'register' }
+    // },
     map: map,
     packages: packages
   };
+  System.defaultJSExtensions = true;
   System.config(config);
 })(this);

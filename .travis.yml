@@ -1,5 +1,8 @@
 language: android
 
+notifications:
+  slack: homedevworld:nQJuwptZIMX2Ajd0C8NnfTWc
+  
 env:
   global:
     - CXX=g++-4.9

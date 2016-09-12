@@ -2,4 +2,6 @@
 
  
 # Setup server
+```bash
  $ npm install
+```

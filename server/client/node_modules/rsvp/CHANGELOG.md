@@ -1,5 +1,20 @@
 # Master
 
+# 3.3.1
+
+* [BUGFIX] for compat, ensure both default export and property export exist. This will likely go away in 4.0.0, and was the result of rollup producing proper output with `__esModule: true` brand
+
+# 3.3.0
+
+* improve build, switch to broccoli-rollup (among other things)
+* RSVP.filter() now itself accepts a Promise.all as input
+* compress and mangle prod build output
+* [REVERT] reject instead of throwing, spec violation.
+
+# 3.2.1
+
+* reject instead of throwing
+
 # 3.2.0
 
 * add tamper protection - then / resolve tampering should avoid fast-paths the rely on those being predictable

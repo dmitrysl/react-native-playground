@@ -48,7 +48,7 @@ When ready to release - specs are all green and the stories are done:
 1. __NOTE__: You will likely need to point to a local jasmine gem in order to run tests locally. _Do not_ push this version of the Gemfile.
 1. __NOTE__: You will likely need to push a new jasmine gem with a dependent version right after this release.
 1. Push these changes to GitHub and verify that this SHA is green
-1. `rake release` - tags therepo with the version, builds the `jasmine-core` gem, pushes the gem to Rubygems.org. In order to release you will have to ensure you have rubygems creds locally.
+1. `rake release` - tags the repo with the version, builds the `jasmine-core` gem, pushes the gem to Rubygems.org. In order to release you will have to ensure you have rubygems creds locally.
 
 ### Release the NPM
 

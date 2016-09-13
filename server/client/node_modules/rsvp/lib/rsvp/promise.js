@@ -16,8 +16,8 @@ import race from './promise/race';
 import Resolve from './promise/resolve';
 import Reject from './promise/reject';
 
-var guidKey = 'rsvp_' + now() + '-';
-var counter = 0;
+const guidKey = 'rsvp_' + now() + '-';
+let counter = 0;
 
 function needsResolver() {
   throw new TypeError('You must pass a resolver function as the first argument to the promise constructor');
@@ -60,7 +60,7 @@ function needsNew() {
   ------------
 
   ```js
-  var promise = new Promise(function(resolve, reject) {
+  let promise = new Promise(function(resolve, reject) {
     // on success
     resolve(value);
 
@@ -84,7 +84,7 @@ function needsNew() {
   ```js
   function getJSON(url) {
     return new Promise(function(resolve, reject){
-      var xhr = new XMLHttpRequest();
+      let xhr = new XMLHttpRequest();
 
       xhr.open('GET', url);
       xhr.onreadystatechange = handler;
@@ -157,9 +157,9 @@ Promise.prototype = {
 
   _guidKey: guidKey,
 
-  _onError: function (reason) {
-    var promise = this;
-    config.after(function() {
+  _onError(reason) {
+    let promise = this;
+    config.after(() => {
       if (promise._onError) {
         config['trigger']('error', reason, promise._label);
       }
@@ -199,12 +199,12 @@ Promise.prototype = {
   findUser().then(function (user) {
     throw new Error('Found user, but still unhappy');
   }, function (reason) {
-    throw new Error('`findUser` rejected and we're unhappy');
+    throw new Error('`findUser` rejected and we\'re unhappy');
   }).then(function (value) {
     // never reached
   }, function (reason) {
     // if `findUser` fulfilled, `reason` will be 'Found user, but still unhappy'.
-    // If `findUser` rejected, `reason` will be '`findUser` rejected and we're unhappy'.
+    // If `findUser` rejected, `reason` will be '`findUser` rejected and we\'re unhappy'.
   });
   ```
   If the downstream promise does not specify a rejection handler, rejection reasons will be propagated further downstream.
@@ -255,7 +255,7 @@ Promise.prototype = {
   Synchronous Example
 
   ```javascript
-  var result;
+  let result;
 
   try {
     result = findResult();
@@ -293,7 +293,7 @@ Promise.prototype = {
   Synchronous Example
 
   ```javascript
-  var author, books;
+  let author, books;
 
   try {
     author = findAuthor();
@@ -368,7 +368,7 @@ Promise.prototype = {
 
   ```js
   function findAuthor(){
-    throw new Error('couldn't find that author');
+    throw new Error('couldn\'t find that author');
   }
 
   // synchronous
@@ -390,7 +390,7 @@ Promise.prototype = {
   Useful for tooling.
   @return {Promise}
 */
-  'catch': function(onRejection, label) {
+  catch(onRejection, label) {
     return this.then(undefined, onRejection, label);
   },
 
@@ -434,18 +434,11 @@ Promise.prototype = {
   Useful for tooling.
   @return {Promise}
 */
-  'finally': function(callback, label) {
-    var promise = this;
-    var constructor = promise.constructor;
+  finally(callback, label) {
+    let promise = this;
+    let constructor = promise.constructor;
 
-    return promise.then(function(value) {
-      return constructor.resolve(callback()).then(function() {
-        return value;
-      });
-    }, function(reason) {
-      return constructor.resolve(callback()).then(function() {
-        return constructor.reject(reason);
-      });
-    }, label);
+    return promise.then(value => constructor.resolve(callback()).then(() => value),
+                       reason => constructor.resolve(callback()).then(() => { throw reason; }), label);
   }
 };

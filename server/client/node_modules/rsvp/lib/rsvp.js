@@ -20,13 +20,10 @@ import asap from './rsvp/asap';
 
 // defaults
 config.async = asap;
-config.after = function(cb) {
-  setTimeout(cb, 0);
-};
-var cast = resolve;
-function async(callback, arg) {
-  config.async(callback, arg);
-}
+config.after = cb => setTimeout(cb, 0);
+const cast = resolve;
+
+const async = (callback, arg) => config.async(callback, arg);
 
 function on() {
   config['on'].apply(config, arguments);
@@ -38,14 +35,39 @@ function off() {
 
 // Set up instrumentation through `window.__PROMISE_INTRUMENTATION__`
 if (typeof window !== 'undefined' && typeof window['__PROMISE_INSTRUMENTATION__'] === 'object') {
-  var callbacks = window['__PROMISE_INSTRUMENTATION__'];
+  let callbacks = window['__PROMISE_INSTRUMENTATION__'];
   configure('instrument', true);
-  for (var eventName in callbacks) {
+  for (let eventName in callbacks) {
     if (callbacks.hasOwnProperty(eventName)) {
       on(eventName, callbacks[eventName]);
     }
   }
 }
+
+import platform from './rsvp/platform';
+// the default export here is for backwards compat:
+//   https://github.com/tildeio/rsvp.js/issues/434
+export default {
+  cast,
+  Promise,
+  EventTarget,
+  all,
+  allSettled,
+  race,
+  hash,
+  hashSettled,
+  rethrow,
+  defer,
+  denodeify,
+  configure,
+  on,
+  off,
+  resolve,
+  reject,
+  map,
+  ['async']: async, // babel seems to error if async isn't a computed prop here...
+  filter
+};
 
 export {
   cast,
@@ -64,7 +86,7 @@ export {
   off,
   resolve,
   reject,
-  async,
   map,
+  async,
   filter
 };

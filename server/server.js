@@ -1,6 +1,9 @@
 var express     = require('express');
 var path = require('path');
 var app         = express();
+var http = require('http');
+const https = require('https');
+// var compression  = require('compression');
 var bodyParser  = require('body-parser');
 var morgan      = require('morgan');
 var mongoose    = require('mongoose');
@@ -18,8 +21,10 @@ app.set('superSecret', uuid.v4() || config.secret); // secret variable
 
 
 // use body parser so we can get info from POST and/or URL parameters
+// app.use(compression());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+// app.use(methodOverride());
 
 // use morgan to log requests to the console
 app.use(morgan('dev'));
@@ -172,7 +177,58 @@ apiRoutes.get('/users', function(req, res) {
     User.find({}, function(err, users) {
         res.json(users);
     });
-});   
+});
+
+apiRoutes.get('/pokemon/pockedex', function (req, res) {
+  https.get('https://pokeapi.co/api/v1/pokedex/1/', (res) => {
+    console.log('statusCode:', res.statusCode);
+    console.log('headers:', res.headers);
+
+    res.on('data', (d) => {
+      process.stdout.write(d);
+    });
+
+  }).on('error', (e) => {
+    console.error(e);
+  });
+});
+apiRoutes.get('/pokemon/:id/info', function(req, res) {
+  const pokemonId = req.params.id;
+  if (!pokemonId) {
+    res.json({ success: false, message: 'Required param not found.' });
+    return;
+  }
+  https.get('https://pokeapi.co/api/v1/pokemon/' + pokemonId, (res) => {
+    console.log('statusCode:', res.statusCode);
+    console.log('headers:', res.headers);
+
+    res.on('data', (d) => {
+      process.stdout.write(d);
+    });
+
+  }).on('error', (e) => {
+    console.error(e);
+  });
+});
+apiRoutes.get('/pokemon/:id/image', function(req, res) {
+  const pokemonId = req.params.id;
+  if (!pokemonId) {
+    res.json({ success: false, message: 'Required param not found.' });
+    return;
+  }
+  https.get('https://pokeapi.co/api/v2/pokemon/' + pokemonId, (res) => {
+    console.log('statusCode:', res.statusCode);
+    console.log('headers:', res.headers);
+
+    res.on('data', (d) => {
+      process.stdout.write(d);
+      res.sendFile(d.sprites.front_female);
+    });
+
+  }).on('error', (e) => {
+    console.error(e);
+  });
+});
 
 // apply the routes to our application with the prefix /api
 app.use('/api', apiRoutes);
@@ -187,6 +243,7 @@ app.use('/libs', express.static(path.resolve(__dirname, 'client/libs'), { maxAge
 app.use('/node_modules', express.static(path.resolve(__dirname, 'client/node_modules'), { maxAge: oneDay }));
 app.use('/css', express.static(path.resolve(__dirname, 'client/app/css'), { maxAge: oneDay }));
 app.use('/systemjs.config.js', express.static(path.resolve(__dirname, 'client/systemjs.config.js'), { maxAge: oneDay }));
+
 
 app.get('/cache.manifest', function(req, res) {
   let date = new Date();
@@ -203,8 +260,12 @@ app.get('/**/*.html',function(req, res){
 });
 
 app.get('/*', function (req, res) {
-    res.sendFile(path.resolve(__dirname, 'client/app/index.html'));
+  var test = __dirname;
+  var requestUrl = req.originalUrl;
+  res.sendFile(path.resolve(__dirname, 'client/app/index.html'));
 });
+
+
 
 // =======================
 // start the server ======

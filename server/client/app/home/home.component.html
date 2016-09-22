@@ -1,6 +1,6 @@
 <div class="col-md-6 col-md-offset-3">
     <h1>Home</h1>
-    <p>You're logged in with JWT!!</p>
+    <p>You're logged in with JWT!!!</p>
     <div>
         Users from secure api end point:
         <ul>
@@ -9,3 +9,9 @@
     </div>
     <p><a [routerLink]="['/login']">Logout</a></p>
 </div>
+
+<div>
+  <button md-raised-button class="md-accent md-hue-1" (click)="getPockemonInfo()">Get Pockemon info</button>
+  <button md-raised-button class="md-accent md-hue-1" (click)="getPockemonInfo1()">Get Pockemon info1</button>
+  <button md-raised-button class="md-accent md-hue-1" (click)="getPockemonInfo2()">Get Pockemon info2</button>
+</div>    

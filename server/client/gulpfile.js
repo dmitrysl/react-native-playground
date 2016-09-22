@@ -41,8 +41,8 @@ gulp.task('buildServer', function () {
 });
 
 gulp.task('copyCss', function() {
-	return gulp.src(path.resolve(config.src.css))
-		.pipe(gulp.dest(path.resolve(config.build.css)));
+	return gulp.src(path.resolve('./src/**/*.css'))
+		.pipe(gulp.dest(path.resolve('./')));
 });
 
 gulp.task('buildSass', function () {

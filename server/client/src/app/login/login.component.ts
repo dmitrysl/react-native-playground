@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
  
 import { AuthenticationService } from '../services/index';
- 
+
+
 @Component({
     // moduleId: module.id,
-    templateUrl: 'login.component.html',
+    templateUrl: 'app/login/login.component.html',
 })
  
 export class LoginComponent implements OnInit {
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
         // reset login status
         this.authenticationService.logout();
     }
- 
+
     login() {
         this.loading = true;
         this.authenticationService.login(this.model.username, this.model.password)
